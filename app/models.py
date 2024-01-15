@@ -32,3 +32,25 @@ class Customer(Base):
 
     reviews = relationship('Review', back_populates='customer')
     restaurant_customers = relationship('RestaurantCustomers', back_populates='customer')
+    
+    
+    def __repr__(self):
+        return f'Customer(id={self.id}, ' + \
+            f'first name="{self.first_name}", ' + \
+            f'last name="{self.last_name})"'
+
+
+class Review(Base):
+    __tablename__ = 'reviews'
+
+    id = Column(Integer, primary_key=True)
+    star_rating = Column(Integer)
+    restaurant_id = Column(Integer, ForeignKey('restaurants.id'))
+    customer_id = Column(Integer, ForeignKey('customers.id'))
+
+    restaurant = relationship('Restaurant', back_populates='reviews')
+    customer = relationship('Customer', back_populates='reviews')
+    def __repr__(self):
+        return f'RestaurantCustomers(restaurant_id={self.restaurant_id}, ' +\
+            f'customer_id={self.customer_id})'
+  
